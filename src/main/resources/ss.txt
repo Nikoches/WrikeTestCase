@@ -1,0 +1,3 @@
+						<svg class="wg-footer__social-icon" role="img">
+                            <use xlink:href="/content/themes/wrike/dist/img/sprite/vector/footer-icons.symbol.svg?v2#twitter"></use>
+                        </svg>
