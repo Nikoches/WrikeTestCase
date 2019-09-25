@@ -19,22 +19,16 @@ import java.util.concurrent.TimeUnit;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-
 @RunWith(Theories.class)
 public class FisrtTestRun {
+    public static Properties properties;
+    private static WebDriver driver;
+    private static String content;
     private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
     private static final String NUMBER = "0123456789";
-    private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
-    public static Properties properties;
-    @DataPoints
-    public static String[][] isEmptyData = new String[][]{
-            {"webdriver.chrome.driver", "webdriver.chrome.driver"},
-            {" ", ""},
-    };
-    private static WebDriver driver;
-    private static String content;
 
+    private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
     /*
         Закрываем соединение и браузер.
      */
@@ -42,7 +36,16 @@ public class FisrtTestRun {
     public static void closeDriver() {
         driver.close();
     }
-
+    /*
+        Тут надо дописать броузеросы
+         используя @Theory
+    */
+    @DataPoints
+    public static Object[][] isEmptyData = new Object[][] {
+            { "webdriver.chrome.driver", "webdriver.chrome.driver" },
+            { " ", false },
+            { "some string", false },
+    };
     /*
         SetUp:
         1.делаем окно наибольшим, для отображения нужной кнопки.
@@ -61,15 +64,15 @@ public class FisrtTestRun {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @Theory
-    public void checkPages(final String... testData) {
-        System.setProperty(testData[0], properties.getProperty(testData[1]));
+        System.setProperty("webdriver.chrome.driver", properties.getProperty("webdriver.chrome.driver"));
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(properties.getProperty("main_url"));
+    }
+
+    @Test
+    public void checkPages() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickAndSendKeys(generateEmail());
         ResendPage resendPage = new ResendPage(driver);
@@ -89,7 +92,7 @@ public class FisrtTestRun {
             char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
             sb.append(rndChar);
         }
-        return sb.toString() + "wpt@wriketask.qaa";
+        return sb.toString()+"wpt@wriketask.qaa";
     }
 
 }
