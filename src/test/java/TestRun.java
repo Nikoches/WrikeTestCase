@@ -3,9 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -20,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 @RunWith(Theories.class)
-public class FisrtTestRun {
+public class TestRun {
     public static Properties properties;
     private static WebDriver driver;
     private static String content;
@@ -54,7 +52,7 @@ public class FisrtTestRun {
      */
     @Before
     public void setUp() {
-        try (InputStream input = FisrtTestRun.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream input = TestRun.class.getClassLoader().getResourceAsStream("app.properties")) {
             properties = new Properties();
             if (input == null) {
                 throw new IOException("Not Found app.properties");
